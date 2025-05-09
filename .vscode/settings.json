@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "dupdup.sln"
+    "dotnet.defaultSolution": "dupdup-unity.sln"
 }
