@@ -1,16 +1,19 @@
 using UnityEngine;
-
-public class GameManager : Singleton<GameManager>
+//For use only when playing games, can be reset.
+public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private static GameManager instance;
+    public static GameManager Instance { get { return instance; } }
+
+    #region Lifecycle
+    //Set Instance
+    void Awake()
     {
-        
+        if (Instance == null)
+        {
+            instance = this;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    #endregion
 }
