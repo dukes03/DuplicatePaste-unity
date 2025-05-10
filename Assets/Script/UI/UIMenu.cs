@@ -6,8 +6,8 @@ public class UIMenu : MonoBehaviour
 {
     [SerializeField] private GameObject[] tutorialPages;
     [SerializeField] private GameObject tutorial;
-    [SerializeField] private Toggle ToggleSFX;
-    [SerializeField] private Toggle ToggleMusic;
+    [SerializeField] private Toggle toggleSFX;
+    [SerializeField] private Toggle toggleMusic;
     private int currentPage = 0;
     private static UIMenu instance;
     public static UIMenu Instance { get { return instance; } }
@@ -101,8 +101,8 @@ public class UIMenu : MonoBehaviour
 
     private void UpdateSoundToggle()
     {
-        ToggleSFX.isOn = SoundManager.Instance.TurnOnSFX;
-        ToggleMusic.isOn = SoundManager.Instance.TurnOnMusic;
+        toggleSFX.isOn = SoundManager.Instance.TurnOnSFX;
+        toggleMusic.isOn = SoundManager.Instance.TurnOnMusic;
     }
     #endregion
 
