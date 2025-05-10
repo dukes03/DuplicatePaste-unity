@@ -9,7 +9,7 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public int Rows = 10;
     public int Columns = 10;
     public float CellSize = 67; // Cell Per pixels
-    [SerializeField] private List<GridBlockkRow> gridBlockkRow;
+    [SerializeField] private GridBlockTable gridBlockTable;
 
     RectTransform rectTransform;
     Vector2 mouseGridOnPostion;
@@ -31,16 +31,7 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         Debug.Log(rectTransform.sizeDelta + " " + RectTransformUtility.PixelAdjustRect(rectTransform, canvas));
         UpdateCellSizeByScreen();
-        gridBlockkRow = new List<GridBlockkRow>();
-
-        for (int row = 0; row < Rows; row++)
-        {
-            gridBlockkRow.Add(new GridBlockkRow(row.ToString()));
-            for (int column = 0; column < Columns; column++)
-            {
-                gridBlockkRow[row].Columns.Add(new GridBlockkColumn(column.ToString()));
-            }
-        }
+        gridBlockTable.init(Rows, Columns);
 
     }
     #endregion
@@ -57,8 +48,9 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         mouseGridOnPostion.x = mousePosition.x - rectTransform.position.x + CellSize;
         mouseGridOnPostion.y = mousePosition.y - rectTransform.position.y + CellSize;
 
-        blockGridOnLocation.x = (int)(mouseGridOnPostion.x / CellSize);
-        blockGridOnLocation.y = (int)(mouseGridOnPostion.y / CellSize);
+        //Because the index of the list starts at 0 and the number of cells starts at 1.
+        blockGridOnLocation.x = (int)(mouseGridOnPostion.x / CellSize) - 1;
+        blockGridOnLocation.y = (int)(mouseGridOnPostion.y / CellSize) - 1;
 
         return blockGridOnLocation;
     }
@@ -67,11 +59,22 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 
 
-        blockGridOnPosittion.x = blockGridOnLocation.x * CellSize + rectTransform.position.x - CellSize / 2;
-        blockGridOnPosittion.y = blockGridOnLocation.y * CellSize + rectTransform.position.y - CellSize / 2;
+        blockGridOnPosittion.x = (blockGridOnLocation.x + 1) * CellSize + rectTransform.position.x - CellSize / 2;
+        blockGridOnPosittion.y = (blockGridOnLocation.y + 1) * CellSize + rectTransform.position.y - CellSize / 2;
 
         return blockGridOnPosittion;
     }
+
+    public bool LocationIsEmpty(Vector2Int location)
+    {
+        return gridBlockTable.IsEmpty(location.x, location.y);
+    }
+    public bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
+    {
+        return gridBlockTable.AddBlock(location.x, location.y, player); ;
+    }
+
+
     #endregion
     #region OnPointer  
     public void OnPointerEnter(PointerEventData eventData)
@@ -87,16 +90,32 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     public void OnPointerMove(PointerEventData eventData)
     {
-        Vector2Int _location = GetGridLocation(eventData.position);
-        if (GetGridLocation(eventData.position) != locationOnhand)
+        if (Onhand != null)
         {
-            locationOnhand = _location;
-            Onhand.transform.position = GetGridPosittion(_location);
+            Vector2Int _location = GetGridLocation(eventData.position);
+            if (GetGridLocation(eventData.position) != locationOnhand)
+            {
+                locationOnhand = _location;
+                Onhand.transform.position = GetGridPosittion(_location);
+            }
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("OnPointerClick");
+        if (Onhand != null)
+        {
+
+
+            Vector2Int _location = GetGridLocation(eventData.position);
+            if (LocationIsEmpty(_location))
+            {
+                Debug.Log("LocationIsEmpty");
+                AddBlockinGrid(_location, ColorPlayer.Blue);
+                Onhand = null;
+            }
+        }
 
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -137,38 +156,4 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         GUI.Label(new Rect(30, 30, 300, 30), GetGridLocation(Input.mousePosition).ToString());
     }
     #endregion
-}
-[Serializable]
-public class GridBlockkRow
-{
-    public string Name;
-    public List<GridBlockkColumn> Columns;
-    public GridBlockkRow(int lengthColumns)
-    {
-        Columns = new List<GridBlockkColumn>(lengthColumns);
-    }
-    public GridBlockkRow(string name)
-    {
-        Name = name;
-        Columns = new List<GridBlockkColumn>();
-    }
-
-}
-[Serializable]
-public class GridBlockkColumn
-{
-    public string Name;
-    public bool IsEmpty;
-    public ColorPlayer Owner;
-    public GridBlockkColumn()
-    {
-        IsEmpty = true;
-        Owner = ColorPlayer.None;
-    }
-    public GridBlockkColumn(string name)
-    {
-        Name = name;
-        IsEmpty = true;
-        Owner = ColorPlayer.None;
-    }
 }

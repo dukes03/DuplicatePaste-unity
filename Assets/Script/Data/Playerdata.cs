@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Playerdata
 {
     /*
@@ -26,7 +26,6 @@ public class Playerdata
         score = 0;
     }
 
-
 }
 public enum ColorPlayer
 {
@@ -35,4 +34,5 @@ public enum ColorPlayer
     Green = 2,
     Yellow = 3,
     Blue = 4,
+
 }
