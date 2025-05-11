@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class GridBlockTable 
+public class GridBlockTable
 {
     private List<GridBlockRow> gridBlockRow;
 
@@ -19,6 +19,8 @@ public class GridBlockTable
                 gridBlockRow[row].Columns.Add(new GridBlockColumn(column.ToString()));
             }
         }
+        GameManager.Instance.OnDoneState(0, 0);
+        Debug.Log("GridBlockTable init Done");
     }
     public bool IsEmpty(int indexRow, int indexColumn)
     {

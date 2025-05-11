@@ -69,12 +69,22 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         return gridBlockTable.IsEmpty(location.x, location.y);
     }
-    public bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
+    private bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
     {
         return gridBlockTable.AddBlock(location.x, location.y, player); ;
     }
 
-
+    public bool SpawnObstacle(Vector2Int _location)
+    {
+        if (LocationIsEmpty(_location))
+        {
+            Vector2 _postion = GetGridPosittion(_location);
+            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent, ColorPlayer.Black);
+            AddBlockinGrid(_location, ColorPlayer.Black);
+            return true;
+        }
+        return false;
+    }
     #endregion
     #region OnPointer  
     public void OnPointerEnter(PointerEventData eventData)
@@ -84,7 +94,7 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             Vector2Int _location = GetGridLocation(eventData.position);
             Vector2 _postion = GetGridPosittion(_location);
             locationOnhand = _location;
-            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent);
+            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent,  ColorPlayer.Red);
         }
 
     }

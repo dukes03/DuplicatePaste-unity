@@ -32,6 +32,9 @@ public class BlockData : MonoBehaviour
             case ColorPlayer.Yellow:
                 color = Color.yellow;
                 break;
+            case ColorPlayer.Black:
+                color = Color.black;
+                break;
         }
 
         targetImage.color = color;

@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46dd07f0134ee0c49a91a50e4dc88bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridBlock: {fileID: 2093830791}
   block: {fileID: 7696784602624184006, guid: d9c667b1e4c10854991a24abfc1b314d, type: 3}
 --- !u!4 &1259812609
 Transform:
@@ -726,7 +727,7 @@ GameObject:
   - component: {fileID: 2093830792}
   - component: {fileID: 2093830791}
   m_Layer: 5
-  m_Name: GameObject (1)
+  m_Name: GridBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
