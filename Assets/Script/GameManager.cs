@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private IGameState currentState;
     [SerializeField] public List<Playerdata> Playerdatas;
     [SerializeField] public int TurnOrder = 0;
-
+    [SerializeField] public UIGameplay UIGameplay;
     #region Lifecycle
     //Set Instance
     void Awake()
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetState(new SetUpMapState());
+        UIGameplay.SetupPanelPlayer();
     }
 
 
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         currentState = newState;
         currentState.EnterState(this);
+        UIGameplay.TogglePanelPlayer();
     }
     public bool CanNextTurn()
     {
@@ -57,13 +59,23 @@ public class GameManager : MonoBehaviour
         TurnOrder += 1;
         if (TurnOrder < Playerdatas.Count)
         {
+            if (Playerdatas[TurnOrder].IsPass)
+            {
+                return NextTurnPlayer();
+            }
             return true;
         }
         TurnOrder = 0;
         return false;
     }
+    public void PassTurn()
+    {
+        Playerdatas[TurnOrder].IsPass = true;
+        OnDoneState();
+    }
     public void OnDoneState()
     {
+         UIGameplay.TogglePanelPlayer();
         currentState?.OnDone();
     }
     #region OnPointer  
