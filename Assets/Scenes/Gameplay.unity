@@ -473,9 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46dd07f0134ee0c49a91a50e4dc88bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridBlock: {fileID: 2093830791}
+  InsGridBlock: {fileID: 2093830791}
   block: {fileID: 7696784602624184006, guid: d9c667b1e4c10854991a24abfc1b314d, type: 3}
-  playerdatas:
+  Playerdatas:
   - name: Red
     color: 1
     order: 0
@@ -484,10 +484,11 @@ MonoBehaviour:
     color: 4
     order: 1
     score: 0
-  - name: Green
-    color: 2
+  - name: y
+    color: 3
     order: 2
     score: 0
+  TurnOrder: 0
 --- !u!4 &1259812609
 Transform:
   m_ObjectHideFlags: 0

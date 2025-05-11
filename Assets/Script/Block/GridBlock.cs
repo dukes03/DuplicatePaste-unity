@@ -69,7 +69,7 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         return gridBlockTable.IsEmpty(location.x, location.y);
     }
-    private bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
+    public bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
     {
         return gridBlockTable.AddBlock(location.x, location.y, player); ;
     }
@@ -97,51 +97,22 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (Onhand == null)
-        {
-            Vector2Int _location = GetGridLocation(eventData.position);
-            Vector2 _postion = GetGridPosittion(_location);
-            locationOnhand = _location;
-            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent, ColorPlayer.Red);
-        }
+        GameManager.Instance.OnPointerEnter(eventData); 
 
     }
     public void OnPointerMove(PointerEventData eventData)
     {
-        if (Onhand != null)
-        {
-            Vector2Int _location = GetGridLocation(eventData.position);
-            if (GetGridLocation(eventData.position) != locationOnhand)
-            {
-                locationOnhand = _location;
-                Onhand.transform.position = GetGridPosittion(_location);
-            }
-        }
+      GameManager.Instance.OnPointerMove(eventData); 
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("OnPointerClick");
-        if (Onhand != null)
-        {
-
-
-            Vector2Int _location = GetGridLocation(eventData.position);
-            if (LocationIsEmpty(_location))
-            {
-                Debug.Log("LocationIsEmpty");
-                AddBlockinGrid(_location, ColorPlayer.Blue);
-                Onhand = null;
-            }
-        }
+          GameManager.Instance.OnPointerClick(eventData); 
 
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (Onhand != null)
-        {
-            Destroy(Onhand);
-        }
+        GameManager.Instance.OnPointerExit(eventData); 
     }
     #endregion
     #region DeBug

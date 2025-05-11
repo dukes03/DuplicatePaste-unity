@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
-    [SerializeField] public GridBlock GridBlock;
+    [SerializeField] public GridBlock InsGridBlock;
     [SerializeField] private GameObject block;
     private IGameState currentState;
     [SerializeField] public List<Playerdata> Playerdatas;
@@ -40,11 +40,43 @@ public class GameManager : MonoBehaviour
         currentState = newState;
         currentState.EnterState(this);
     }
-
+    public bool NextTurnPlayer()
+    {
+        TurnOrder += 1;
+        if (TurnOrder < Playerdatas.Count)
+        {
+            return true;
+        }
+        TurnOrder = 0;
+        return false;
+    }
     public void OnDoneState(int indexRow, int indexColumn)
     {
         currentState?.OnDone(indexRow, indexColumn);
     }
+    #region OnPointer  
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        currentState?.OnPointerEnter(eventData);
+    }
 
+    public void OnPointerMove(PointerEventData eventData)
+    {
+        currentState?.OnPointerMove(eventData);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        currentState?.OnPointerClick(eventData);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        currentState?.OnPointerExit(eventData);
+    }
+    #endregion
+    public void DestroyGameObj(GameObject obj)
+    {
+        Destroy(obj);
+    }
 
 }

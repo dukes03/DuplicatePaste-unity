@@ -20,7 +20,6 @@ public class GridBlockTable
             }
         }
         GameManager.Instance.OnDoneState(0, 0);
-        Debug.Log("GridBlockTable init Done");
     }
     public bool IsEmpty(int indexRow, int indexColumn)
     {
