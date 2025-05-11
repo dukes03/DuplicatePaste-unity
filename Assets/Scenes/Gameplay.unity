@@ -298,8 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5174b47e62dcc458c0ca3e9d4b72c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rows: 12
-  Columns: 12
+  AxisX: 10
+  AxisY: 10
   CellSize: 67
   canvas: {fileID: 0}
   lineColor: {r: 1, g: 1, b: 1, a: 1}
@@ -781,9 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5174b47e62dcc458c0ca3e9d4b72c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rows: 12
-  Columns: 12
-  CellSize: 69
+  AxisX: 12
+  AxisY: 12
+  CellSize: 42.7
   canvas: {fileID: 1396867960}
   lineColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &2093830792

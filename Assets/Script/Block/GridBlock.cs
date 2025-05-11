@@ -110,6 +110,35 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 
     }
+    public List<Vector2Int> GetConnectedOwnBlock(int startX, int startY, ColorPlayer own)
+    {
+        var result = new List<Vector2Int>();
+        var queue = new Queue<Vector2Int>();
+        var visited = new bool[AxisX, AxisY];
+        queue.Enqueue(new Vector2Int(startX, startY));
+        visited[startX, startY] = true;
+        Vector2Int[] directions = { new Vector2Int(0, -1), new Vector2Int(-1, 0), new Vector2Int(1, 0), new Vector2Int(0, 1), };
+        while (queue.Count > 0)
+        {
+            var grid = queue.Dequeue();
+            result.Add(grid);
+            foreach (var direc in directions)
+            {
+                int newX = grid.x + direc.x;
+                int newY = grid.y + direc.y;
+                if (newX < 0 || newY < 0 || newX >= AxisX || newY >= AxisY)
+                    continue;
+                if (visited[newX, newY])
+                    continue;
+                visited[newX, newY] = true;
+                if (gridBlockTable.IsOwn(newX, newY, own))
+                {
+                    queue.Enqueue(new Vector2Int(newX, newY));
+                }
+            }
+        }
+        return result;
+    }
     #endregion
     #region OnPointer  
     protected void OnRectTransformDimensionsChange()

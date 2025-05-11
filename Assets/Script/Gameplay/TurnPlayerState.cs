@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TurnPlayerState : IGameState
 {
 
-    GameObject onhand;//block hold and wait to drop
+    List<GameObject> onhand;//block hold and wait to drop
+    List<Vector2Int> difflocationOnhand;
     GridBlock gridBlock;
     RectTransform rectTransform;
     Vector2Int locationOnhand;
@@ -45,11 +47,15 @@ public class TurnPlayerState : IGameState
             if (gridBlock.GetGridLocation(eventData.position) != locationOnhand)
             {
                 locationOnhand = _location;
-                onhand.transform.position = gridBlock.GetGridPosittion(_location);
-                gridBlock.BlockCanPlace(onhand, _location);
+                for (int i = 0; i < onhand.Count; i++)
+                {
+                    onhand[i].transform.position = gridBlock.GetGridPosittion(_location + difflocationOnhand[i]);
+                    gridBlock.BlockCanPlace(onhand[i], _location + difflocationOnhand[i]);
+                }
+
             }
         }
-         
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -58,29 +64,50 @@ public class TurnPlayerState : IGameState
         Debug.Log("OnPointerClick");
         if (onhand != null)
         {
-
-            if (gridBlock.LocationIsEmpty(_location))
+            bool allIsEmpty = true;
+            for (int i = 0; i < onhand.Count; i++)
             {
-                Debug.Log("LocationIsEmpty");
-                gridBlock.AddBlockinGrid(_location, playerdata.Color);
-
+                if (!gridBlock.LocationIsEmpty(_location + difflocationOnhand[i]))
+                {
+                    allIsEmpty = false;
+                }
+            }
+            if (allIsEmpty)
+            {
+                for (int i = 0; i < onhand.Count; i++)
+                {
+                    gridBlock.AddBlockinGrid(_location + difflocationOnhand[i], playerdata.Color);
+                }
                 GameManager.Instance.OnDoneState();
-
             }
         }
         else if (gridBlock.LocationIsOwn(_location, playerdata.Color))
         {
+            List<Vector2Int> group = new List<Vector2Int>();
+            onhand = new List<GameObject>();
+            difflocationOnhand = new List<Vector2Int>();
+            group = gridBlock.GetConnectedOwnBlock(_location.x, _location.y, playerdata.Color);
+            locationOnhand = _location;
+            foreach (var item in group)
+            {
+                onhand.Add(gridBlock.SpawnBlock(_location, playerdata.Color));
+                difflocationOnhand.Add(item - locationOnhand);
+                //Debug.Log(item.ToString());
+            }
 
-            Vector2 _postion = gridBlock.GetGridPosittion(_location);
-
-            onhand = gridBlock.SpawnBlock(_location, playerdata.Color);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         if (onhand != null)
         {
-            gameManager.DestroyGameObj(onhand);
+            int count = onhand.Count;
+            for (int i = 0; i < count; i++)
+            {
+                gameManager.DestroyGameObj(onhand[onhand.Count - 1]);
+                onhand.RemoveAt(onhand.Count - 1);
+            }
+            difflocationOnhand = null;
             onhand = null;
         }
     }
