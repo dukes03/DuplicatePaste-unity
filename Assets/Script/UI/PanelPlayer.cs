@@ -6,8 +6,8 @@ public class PanelPlayer : MonoBehaviour
 {
     [SerializeField] public TMP_InputField textInput;
     [SerializeField] public TextMeshProUGUI Playername;
-    [SerializeField] public TextMeshProUGUI score;
-    [SerializeField] public GameObject panelScore;
+    [SerializeField] public TextMeshProUGUI Score;
+    [SerializeField] public GameObject PanelScore;
     [SerializeField] public RawImage IconPlayer;
     public RectTransform panel;
     private Vector2 hiddenPosition = new Vector2(-300f, 0f);
@@ -39,13 +39,23 @@ public class PanelPlayer : MonoBehaviour
 
         targetImage.color = color;
     }
-
+    public void SetScore(int score)
+    {
+        PanelScore.SetActive(true);
+        Score.text = score.ToString();
+    }
     public void SetHide()
     {
-        shownPosition = new Vector2(-150,   panel.anchoredPosition.y);
-        hiddenPosition = new Vector2(100,   panel.anchoredPosition.y);
+        shownPosition = new Vector2(-150, panel.anchoredPosition.y);
+        hiddenPosition = new Vector2(100, panel.anchoredPosition.y);
         TogglePanel();
         // panel.anchoredPosition = hiddenPosition;
+    }
+    public void ComeBack()
+    {
+        if (slideCoroutine != null)
+            StopCoroutine(slideCoroutine);
+   
     }
     public void TogglePanel()
     {
@@ -56,10 +66,14 @@ public class PanelPlayer : MonoBehaviour
 
         slideCoroutine = StartCoroutine(Slide(isVisible ? shownPosition : hiddenPosition));
     }
+    public void SlideTo(Vector2 targetPosition)
+    {
+        slideCoroutine = StartCoroutine(Slide(targetPosition));
+    }
 
     IEnumerator Slide(Vector2 targetPosition)
     {
-        while (Vector2.Distance(panel.anchoredPosition, targetPosition) > 0.1f)
+        while (Vector2.Distance(panel.anchoredPosition, targetPosition) > 0.3f)
         {
             panel.anchoredPosition = Vector2.Lerp(panel.anchoredPosition, targetPosition, Time.deltaTime * 10f);
             yield return null;

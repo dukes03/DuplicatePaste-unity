@@ -29,7 +29,14 @@ public class TurnPlayerState : IGameState
             else
             {
                 GameManager.Instance.TurnOrder = 0;
-                GameManager.Instance.SetState(new TurnPlayerState());
+                if (!GameManager.Instance.Playerdatas[0].IsPass)
+                {
+                     GameManager.Instance.SetState(new TurnPlayerState());
+                }
+                else{
+                    OnDone();
+                }
+               
             }
         }
         else

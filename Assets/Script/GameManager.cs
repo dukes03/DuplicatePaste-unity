@@ -38,9 +38,10 @@ public class GameManager : MonoBehaviour
     }
     public void SetState(IGameState newState)
     {
+        UIGameplay.TogglePanelPlayer();
         currentState = newState;
         currentState.EnterState(this);
-        UIGameplay.TogglePanelPlayer();
+        
     }
     public bool CanNextTurn()
     {

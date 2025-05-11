@@ -25,6 +25,7 @@ public class SetUpPlayerState : IGameState
         else
         {
             GameManager.Instance.TurnOrder = 0;
+            GameManager.Instance.UIGameplay.ShowbntPass();
             GameManager.Instance.SetState(new TurnPlayerState());
         }
     }

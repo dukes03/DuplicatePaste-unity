@@ -94,8 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textInput: {fileID: 119750247186682195}
   Playername: {fileID: 1511913044973930391}
-  score: {fileID: 4759097956610193842}
-  panelScore: {fileID: 921449332922554329}
+  Score: {fileID: 4759097956610193842}
+  PanelScore: {fileID: 921449332922554329}
   IconPlayer: {fileID: 3481493079689626194}
   panel: {fileID: 6697537142092662753}
 --- !u!1 &384228342631728369

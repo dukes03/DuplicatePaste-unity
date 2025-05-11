@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverState : IGameState
@@ -19,8 +20,15 @@ public class GameOverState : IGameState
             }
             Debug.Log(gameManager.Playerdatas[numPlayer].Name + gameManager.Playerdatas[numPlayer].Score);
         }
+        List<Playerdata> _playerdatas = new List<Playerdata>();
 
-
+        _playerdatas.AddRange(gameManager.Playerdatas);
+        _playerdatas.Sort((b, a) => a.Score.CompareTo(b.Score));
+        gameManager.UIGameplay.ShowGameOver();
+        for (int i = 0; i < _playerdatas.Count; i++)
+        {
+            gameManager.UIGameplay.SlideTo(_playerdatas[i].Order, i);
+        }
     }
     public void OnDone() { }
 }
