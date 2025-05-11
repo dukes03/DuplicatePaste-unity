@@ -34,5 +34,8 @@ public enum ColorPlayer
     Green = 2,
     Yellow = 3,
     Blue = 4,
+    Black = 5,
+
+
 
 }
