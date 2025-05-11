@@ -7,25 +7,28 @@ public class Playerdata
     /*
     Used to store player data between Menu and GamePlay pages.
     */
-    [SerializeField]  private string name;
-    [SerializeField]  private ColorPlayer color;
-    [SerializeField]  private int order;
-    [SerializeField]  private int score;
+    [SerializeField] private string name;
+    [SerializeField] private ColorPlayer color;
+    [SerializeField] private int order;
+    [SerializeField] private int score;
     public string Name { get { return name; } set { name = value; } }
     public ColorPlayer Color { get { return color; } set { color = value; } }
     public int Order { get { return order; } set { order = value; } }
     public int Score { get { return score; } set { score = value; } }
+    public bool IsPass;
     Playerdata()
     {
         name = "";
         order = 0;
         score = 0;
+        IsPass = false;
     }
     public void ReSetPlayerdata()
     {
         name = "";
         order = 0;
         score = 0;
+        IsPass = false;
     }
 
 }

@@ -480,14 +480,17 @@ MonoBehaviour:
     color: 1
     order: 0
     score: 0
+    IsPass: 0
   - name: Bule
     color: 4
     order: 1
     score: 0
+    IsPass: 0
   - name: y
     color: 3
     order: 2
     score: 0
+    IsPass: 0
   TurnOrder: 0
 --- !u!4 &1259812609
 Transform:
@@ -738,8 +741,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2093830790}
   - component: {fileID: 2093830793}
-  - component: {fileID: 2093830792}
   - component: {fileID: 2093830791}
+  - component: {fileID: 2093830792}
   m_Layer: 5
   m_Name: GridBlock
   m_TagString: Untagged

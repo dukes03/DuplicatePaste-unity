@@ -15,7 +15,7 @@ public class SetUpPlayerState : IGameState
         gridBlock = gameManager.InsGridBlock;
         playerdata = gameManager.Playerdatas[gameManager.TurnOrder];
     }
-    public void OnDone(int indexRow, int indexColumn)
+    public void OnDone()
     {
 
         if (GameManager.Instance.NextTurnPlayer())
@@ -24,7 +24,7 @@ public class SetUpPlayerState : IGameState
         }
         else
         {
-            gameManager.TurnOrder = 0;
+            GameManager.Instance.TurnOrder = 0;
             GameManager.Instance.SetState(new TurnPlayerState());
         }
     }
@@ -43,14 +43,21 @@ public class SetUpPlayerState : IGameState
     }
     public void OnPointerMove(PointerEventData eventData)
     {
+        Vector2Int _location = gridBlock.GetGridLocation(eventData.position);
         if (onhand != null)
         {
-            Vector2Int _location = gridBlock.GetGridLocation(eventData.position);
+
             if (gridBlock.GetGridLocation(eventData.position) != locationOnhand)
             {
                 locationOnhand = _location;
                 onhand.transform.position = gridBlock.GetGridPosittion(_location);
+                gridBlock.BlockCanPlace(onhand, _location);
             }
+        }
+        else
+        {
+            onhand = gridBlock.SpawnBlock(_location, playerdata.Color);
+            gridBlock.BlockCanPlace(onhand, _location);
         }
     }
 
@@ -65,7 +72,7 @@ public class SetUpPlayerState : IGameState
                 Debug.Log("LocationIsEmpty");
                 gridBlock.AddBlockinGrid(_location, playerdata.Color);
 
-                GameManager.Instance.OnDoneState(0, 0);
+                GameManager.Instance.OnDoneState();
                 onhand = null;
             }
         }
@@ -76,6 +83,7 @@ public class SetUpPlayerState : IGameState
         if (onhand != null)
         {
             gameManager.DestroyGameObj(onhand);
+            onhand = null;
         }
     }
     #endregion

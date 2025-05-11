@@ -64,10 +64,26 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         return blockGridOnPosittion;
     }
+    public void BlockCanPlace(GameObject Block, Vector2Int location)
+    {
+        if (LocationIsEmpty(location))
+        {
+            Block.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            Block.transform.localScale = new Vector3(.75f, .75f, .75f);
+        }
+
+    }
 
     public bool LocationIsEmpty(Vector2Int location)
     {
         return gridBlockTable.IsEmpty(location.x, location.y);
+    }
+    public bool LocationIsOwn(Vector2Int location, ColorPlayer player)
+    {
+        return gridBlockTable.IsOwn(location.x, location.y, player);
     }
     public bool AddBlockinGrid(Vector2Int location, ColorPlayer player)
     {
@@ -85,6 +101,16 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
         return false;
     }
+    public GameObject SpawnBlock(Vector2Int _location, ColorPlayer player)
+    {
+
+        Vector2 _postion = GetGridPosittion(_location);
+        locationOnhand = _location;
+        return GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent, player);
+        ;
+
+
+    }
     #endregion
     #region OnPointer  
     protected void OnRectTransformDimensionsChange()
@@ -97,22 +123,22 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameManager.Instance.OnPointerEnter(eventData); 
+        GameManager.Instance.OnPointerEnter(eventData);
 
     }
     public void OnPointerMove(PointerEventData eventData)
     {
-      GameManager.Instance.OnPointerMove(eventData); 
+        GameManager.Instance.OnPointerMove(eventData);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-          GameManager.Instance.OnPointerClick(eventData); 
+        GameManager.Instance.OnPointerClick(eventData);
 
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        GameManager.Instance.OnPointerExit(eventData); 
+        GameManager.Instance.OnPointerExit(eventData);
     }
     #endregion
     #region DeBug

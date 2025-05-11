@@ -40,6 +40,18 @@ public class GameManager : MonoBehaviour
         currentState = newState;
         currentState.EnterState(this);
     }
+    public bool CanNextTurn()
+    {
+        foreach (var item in Playerdatas)
+        {
+            if (item.IsPass == false)
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
     public bool NextTurnPlayer()
     {
         TurnOrder += 1;
@@ -50,9 +62,9 @@ public class GameManager : MonoBehaviour
         TurnOrder = 0;
         return false;
     }
-    public void OnDoneState(int indexRow, int indexColumn)
+    public void OnDoneState()
     {
-        currentState?.OnDone(indexRow, indexColumn);
+        currentState?.OnDone();
     }
     #region OnPointer  
     public void OnPointerEnter(PointerEventData eventData)

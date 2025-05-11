@@ -19,7 +19,7 @@ public class GridBlockTable
                 gridBlockRow[row].Columns.Add(new GridBlockColumn(column.ToString()));
             }
         }
-        GameManager.Instance.OnDoneState(0, 0);
+        GameManager.Instance.OnDoneState();
     }
     public bool IsEmpty(int indexRow, int indexColumn)
     {
@@ -28,7 +28,14 @@ public class GridBlockTable
             return GetRow(indexRow).ColIsEmpty(indexColumn);
         }
         return false;
-
+    }
+    public bool IsOwn(int indexRow, int indexColumn, ColorPlayer own)
+    {
+        if (indexRow < gridBlockRow.Count)
+        {
+            return GetCol(indexRow, indexColumn).Owner == own;
+        }
+        return false;
     }
     private GridBlockColumn GetCol(int indexRow, int indexColumn)
     {

@@ -29,7 +29,7 @@ public class SetUpMapState : IGameState
 
     }
 
-    public void OnDone(int indexRow, int indexColumn)
+    public void OnDone()
     {
         spawnObstacle(0, 0, 8);
         GameManager.Instance.SetState(new SetUpPlayerState());

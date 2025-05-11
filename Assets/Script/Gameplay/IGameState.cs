@@ -3,8 +3,9 @@ using UnityEngine.EventSystems;
 
 public interface IGameState
 {
+    
     void EnterState(GameManager gameManager);
-    void OnDone(int indexRow, int indexColumn);
+    void OnDone();
     #region OnPointer  
     void OnPointerEnter(PointerEventData eventData)
     {

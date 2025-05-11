@@ -6,5 +6,5 @@ public class GameOverState : IGameState
     {
 
     }
-    public void OnDone(int indexRow, int indexColumn) { }
+    public void OnDone() { }
 }
