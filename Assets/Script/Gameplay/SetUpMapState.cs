@@ -8,8 +8,8 @@ public class SetUpMapState : IGameState
     public void EnterState(GameManager gameManager)
     {
         gridBlock = gameManager.InsGridBlock;
-        gridSize.x = gridBlock.Columns;
-        gridSize.y = gridBlock.Rows;
+        gridSize.x = gridBlock.AxisX;
+        gridSize.y = gridBlock.AxisY;
     }
     private void spawnObstacle(int countObstacle, int countTry, int maxObstacle)
     {

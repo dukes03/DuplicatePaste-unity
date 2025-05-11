@@ -5,51 +5,53 @@ using UnityEngine;
 [Serializable]
 public class GridBlockTable
 {
-    private List<GridBlockRow> gridBlockRow;
+    private List<GridBlockAxisX> gridBlockAxisX;
 
-    public void init(int Rows, int Columns)
+    public void init(int AxisX, int AxisY)
     {
-        gridBlockRow = new List<GridBlockRow>();
+        gridBlockAxisX = new List<GridBlockAxisX>();
 
-        for (int row = 0; row < Rows; row++)
+        for (int axisx = 0; axisx < AxisX; axisx++)
         {
-            gridBlockRow.Add(new GridBlockRow(row.ToString()));
-            for (int column = 0; column < Columns; column++)
+            gridBlockAxisX.Add(new GridBlockAxisX(axisx.ToString()));
+            for (int column = 0; column < AxisY; column++)
             {
-                gridBlockRow[row].Columns.Add(new GridBlockColumn(column.ToString()));
+                gridBlockAxisX[axisx].AxisY.Add(new GridBlockAxisY(column.ToString()));
             }
         }
         GameManager.Instance.OnDoneState();
     }
-    public bool IsEmpty(int indexRow, int indexColumn)
+    public bool IsEmpty(int indexAxisX, int indexAxisY)
     {
-        if (indexRow < gridBlockRow.Count)
+        if (indexAxisX < gridBlockAxisX.Count && indexAxisX >= 0 && indexAxisY >= 0 && indexAxisY < GetAxisX(0).AxisY.Count
+        )
         {
-            return GetRow(indexRow).ColIsEmpty(indexColumn);
+            return GetAxisX(indexAxisX).ColIsEmpty(indexAxisY);
         }
         return false;
     }
-    public bool IsOwn(int indexRow, int indexColumn, ColorPlayer own)
+    public bool IsOwn(int indexAxisX, int indexAxisY, ColorPlayer own)
     {
-        if (indexRow < gridBlockRow.Count)
+        if (indexAxisX < gridBlockAxisX.Count)
         {
-            return GetCol(indexRow, indexColumn).Owner == own;
+            return GetAxisY(indexAxisX, indexAxisY).Owner == own;
         }
         return false;
     }
-    private GridBlockColumn GetCol(int indexRow, int indexColumn)
+    private GridBlockAxisY GetAxisY(int indexAxisX, int indexAxisY)
     {
-        return GetRow(indexRow).Columns[indexColumn];
+        return GetAxisX(indexAxisX).AxisY[indexAxisY];
     }
-    private GridBlockRow GetRow(int indexRow)
+    private GridBlockAxisX GetAxisX(int indexAxisX)
     {
-        return gridBlockRow[indexRow];
+
+        return gridBlockAxisX[indexAxisX];
     }
-    public bool AddBlock(int indexRow, int indexColumn, ColorPlayer player)
+    public bool AddBlock(int indexAxisX, int indexAxisY, ColorPlayer player)
     {
-        if (IsEmpty(indexRow, indexColumn))
+        if (IsEmpty(indexAxisX, indexAxisY))
         {
-            GetCol(indexRow, indexColumn).SetOwner(player);
+            GetAxisY(indexAxisX, indexAxisY).SetOwner(player);
             return true;
         }
         else
@@ -59,24 +61,24 @@ public class GridBlockTable
     }
 }
 [Serializable]
-public class GridBlockRow
+public class GridBlockAxisX
 {
     public string Name;
-    public List<GridBlockColumn> Columns;
-    public GridBlockRow(int lengthColumns)
+    public List<GridBlockAxisY> AxisY;
+    public GridBlockAxisX(int lengthAxisY)
     {
-        Columns = new List<GridBlockColumn>(lengthColumns);
+        AxisY = new List<GridBlockAxisY>(lengthAxisY);
     }
-    public GridBlockRow(string name)
+    public GridBlockAxisX(string name)
     {
         Name = name;
-        Columns = new List<GridBlockColumn>();
+        AxisY = new List<GridBlockAxisY>();
     }
     public bool ColIsEmpty(int index)
     {
-        if (index < Columns.Count)
+        if (index < AxisY.Count)
         {
-            return Columns[index].IsEmpty;
+            return AxisY[index].IsEmpty;
         }
         else
         {
@@ -86,17 +88,17 @@ public class GridBlockRow
 
 }
 [Serializable]
-public class GridBlockColumn
+public class GridBlockAxisY
 {
     public string Name;
     public bool IsEmpty;
     public ColorPlayer Owner;
-    public GridBlockColumn()
+    public GridBlockAxisY()
     {
         IsEmpty = true;
         Owner = ColorPlayer.None;
     }
-    public GridBlockColumn(string name)
+    public GridBlockAxisY(string name)
     {
         Name = name;
         IsEmpty = true;

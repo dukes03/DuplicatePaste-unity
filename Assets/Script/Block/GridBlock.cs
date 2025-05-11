@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
  IPointerMoveHandler, IPointerClickHandler
 {
-    public int Rows = 10;
-    public int Columns = 10;
+    public int AxisX = 10;
+    public int AxisY = 10;
     public float CellSize = 67; // Cell Per pixels
     [SerializeField] private GridBlockTable gridBlockTable;
 
@@ -31,15 +31,14 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         Debug.Log(rectTransform.sizeDelta + " " + RectTransformUtility.PixelAdjustRect(rectTransform, canvas));
         UpdateCellSizeByScreen();
-        gridBlockTable.init(Rows, Columns);
+        gridBlockTable.init(AxisX, AxisY);
 
     }
     #endregion
     #region Grid  
     void UpdateCellSizeByScreen()
     {
-        Debug.Log((Screen.width / 1920));
-        CellSize = (rectTransform.sizeDelta.x / Columns) * (Screen.width / 1920f);
+        CellSize = (rectTransform.sizeDelta.x / AxisX) * (Screen.width / 1920f);
     }
 
     public Vector2Int GetGridLocation(Vector2 mousePosition)
@@ -147,17 +146,17 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         Gizmos.color = lineColor;
 
-        for (int x = 0; x <= Columns; x++)
+        for (int x = 0; x <= AxisY; x++)
         {
             Vector3 start = transform.position + new Vector3(x * CellSize, 0, 0);
-            Vector3 end = transform.position + new Vector3(x * CellSize, Rows * CellSize, 0);
+            Vector3 end = transform.position + new Vector3(x * CellSize, AxisX * CellSize, 0);
             Gizmos.DrawLine(start, end);
         }
 
-        for (int y = 0; y <= Rows; y++)
+        for (int y = 0; y <= AxisX; y++)
         {
             Vector3 start = transform.position + new Vector3(0, y * CellSize, 0);
-            Vector3 end = transform.position + new Vector3(Columns * CellSize, y * CellSize, 0);
+            Vector3 end = transform.position + new Vector3(AxisY * CellSize, y * CellSize, 0);
             Gizmos.DrawLine(start, end);
         }
     }
