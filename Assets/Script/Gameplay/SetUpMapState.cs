@@ -6,8 +6,8 @@ public class SetUpMapState : IGameState
     Vector2Int gridSize;
     public void EnterState(GameManager gameManager)
     {
-        gridSize.x = gameManager.gridBlock.Columns;
-        gridSize.y = gameManager.gridBlock.Rows;
+        gridSize.x = gameManager.GridBlock.Columns;
+        gridSize.y = gameManager.GridBlock.Rows;
 
 
     }
@@ -19,7 +19,7 @@ public class SetUpMapState : IGameState
 
             location.x = Random.Range(0, gridSize.x);
             location.y = Random.Range(0, gridSize.y);
-            if (GameManager.Instance.gridBlock.SpawnObstacle(location))
+            if (GameManager.Instance.GridBlock.SpawnObstacle(location))
             {
                 spawnObstacle(countObstacle + 1, 0, maxObstacle);
             }

@@ -87,6 +87,14 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     #endregion
     #region OnPointer  
+    protected void OnRectTransformDimensionsChange()
+    {
+        if (rectTransform != null)
+        {
+            Vector2 size = rectTransform.rect.size;
+            UpdateCellSizeByScreen();
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (Onhand == null)
@@ -94,7 +102,7 @@ public class GridBlock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             Vector2Int _location = GetGridLocation(eventData.position);
             Vector2 _postion = GetGridPosittion(_location);
             locationOnhand = _location;
-            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent,  ColorPlayer.Red);
+            Onhand = GameManager.Instance.NewBlock(CellSize, _postion, _location, transform.parent, ColorPlayer.Red);
         }
 
     }

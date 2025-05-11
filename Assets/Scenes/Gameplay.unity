@@ -475,6 +475,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridBlock: {fileID: 2093830791}
   block: {fileID: 7696784602624184006, guid: d9c667b1e4c10854991a24abfc1b314d, type: 3}
+  playerdatas:
+  - name: Red
+    color: 1
+    order: 0
+    score: 0
+  - name: Bule
+    color: 4
+    order: 1
+    score: 0
+  - name: Green
+    color: 2
+    order: 2
+    score: 0
 --- !u!4 &1259812609
 Transform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 //For use only when playing games, can be reset.
@@ -5,9 +6,12 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
-    [SerializeField] public GridBlock gridBlock;
+    [SerializeField] public GridBlock GridBlock;
     [SerializeField] private GameObject block;
     private IGameState currentState;
+    [SerializeField] public List<Playerdata> Playerdatas;
+    [SerializeField] public int TurnOrder = 0;
+
     #region Lifecycle
     //Set Instance
     void Awake()
