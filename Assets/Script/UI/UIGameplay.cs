@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIGameplay : MonoBehaviour
@@ -37,14 +38,16 @@ public class UIGameplay : MonoBehaviour
     { GameOver.SetActive(true); }
     public void ShowbntPass()
     { bntPass.SetActive(true); }
+    public void HidebntPass()
+    { bntPass.SetActive(false); }
     public void SlideTo(int player, int rank)
     {
         GameObject _objpanelPlayer = panelPlayer[player];
-        PanelPlayer _panelPlayer = _objpanelPlayer.GetComponent<PanelPlayer>();  
-          _panelPlayer.SetScore(GameManager.Instance.Playerdatas[player].Score);
+        PanelPlayer _panelPlayer = _objpanelPlayer.GetComponent<PanelPlayer>();
+        _panelPlayer.SetScore(GameManager.Instance.Playerdatas[player].Score);
         _panelPlayer.ComeBack();
         _objpanelPlayer.transform.SetParent(Podium.transform);
-    
+
         _panelPlayer.panel.sizeDelta = new Vector2(400, 200);
     }
     public void TogglePanelPlayer()
@@ -54,5 +57,9 @@ public class UIGameplay : MonoBehaviour
     public void PassTurn()
     {
         GameManager.Instance.PassTurn();
+    }
+    public void NextScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
