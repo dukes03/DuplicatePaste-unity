@@ -38,15 +38,8 @@ public class GridBlockTable
         }
         return false;
     }
-    private GridBlockAxisY GetAxisY(int indexAxisX, int indexAxisY)
-    {
-        return GetAxisX(indexAxisX).AxisY[indexAxisY];
-    }
-    private GridBlockAxisX GetAxisX(int indexAxisX)
-    {
-
-        return gridBlockAxisX[indexAxisX];
-    }
+    private GridBlockAxisY GetAxisY(int indexAxisX, int indexAxisY) => GetAxisX(indexAxisX).AxisY[indexAxisY];
+    private GridBlockAxisX GetAxisX(int indexAxisX) => gridBlockAxisX[indexAxisX];
     public bool AddBlock(int indexAxisX, int indexAxisY, ColorPlayer player)
     {
         if (IsEmpty(indexAxisX, indexAxisY))

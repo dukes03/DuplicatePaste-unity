@@ -61,10 +61,7 @@ public class UIMenu : MonoBehaviour
             bntReMove.interactable = false;
             currentPlayer = 1;
         }
-        else
-        {
-
-        }
+  
 
     }
     public void SetPlayerdatas()
@@ -72,10 +69,7 @@ public class UIMenu : MonoBehaviour
         AppManager.Instance.Playerdatas = GetPlayerdatas();
         NextScene();
     }
-    public void NextScene()
-    {
-        SceneManager.LoadScene(1);
-    }
+    public void NextScene() => SceneManager.LoadScene(1);
     public List<Playerdata> GetPlayerdatas()
     {
         List<Playerdata> playerdatas = new List<Playerdata>();
@@ -89,6 +83,10 @@ public class UIMenu : MonoBehaviour
             playerdatas.Add(_Playerdata);
         }
         return playerdatas;
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
     #endregion
 

@@ -31,12 +31,13 @@ public class TurnPlayerState : IGameState
                 GameManager.Instance.TurnOrder = 0;
                 if (!GameManager.Instance.Playerdatas[0].IsPass)
                 {
-                     GameManager.Instance.SetState(new TurnPlayerState());
+                    GameManager.Instance.SetState(new TurnPlayerState());
                 }
-                else{
+                else
+                {
                     OnDone();
                 }
-               
+
             }
         }
         else
@@ -99,7 +100,7 @@ public class TurnPlayerState : IGameState
             {
                 onhand.Add(gridBlock.SpawnBlock(_location, playerdata.Color));
                 difflocationOnhand.Add(item - locationOnhand);
-                //Debug.Log(item.ToString());
+     
             }
 
         }

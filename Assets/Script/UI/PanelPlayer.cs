@@ -60,10 +60,8 @@ public class PanelPlayer : MonoBehaviour
     public void TogglePanel()
     {
         isVisible = !isVisible;
-
         if (slideCoroutine != null)
             StopCoroutine(slideCoroutine);
-
         slideCoroutine = StartCoroutine(Slide(isVisible ? shownPosition : hiddenPosition));
     }
     public void SlideTo(Vector2 targetPosition)

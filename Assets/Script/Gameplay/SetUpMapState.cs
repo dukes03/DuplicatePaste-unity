@@ -26,9 +26,7 @@ public class SetUpMapState : IGameState
                 spawnObstacle(countObstacle, countTry + 1, maxObstacle);
             }
         }
-
     }
-
     public void OnDone()
     {
         spawnObstacle(0, 0, 8);

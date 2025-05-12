@@ -29,7 +29,7 @@ public class GameOverState : IGameState
             Debug.Log(_playerdatas[i].Score);
             gameManager.UIGameplay.SlideTo(_playerdatas[i].Order, i);
         }
-         gameManager.UIGameplay.HidebntPass();
+        gameManager.UIGameplay.HidebntPass();
     }
     public void OnDone() { }
 }

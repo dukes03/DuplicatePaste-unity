@@ -17,7 +17,6 @@ public class SetUpPlayerState : IGameState
     }
     public void OnDone()
     {
-
         if (GameManager.Instance.NextTurnPlayer())
         {
             GameManager.Instance.SetState(new SetUpPlayerState());

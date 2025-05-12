@@ -9,20 +9,13 @@ public class SoundManager : Singleton<SoundManager>
     {
         DontDestroyOnLoad(this);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void PlaySound()
     {
-        Debug.Log("PlaySound");
+
     }
     public void PlaySoundBnt()
     {
-        Debug.Log("PlaySound");
+
     }
 
 }
