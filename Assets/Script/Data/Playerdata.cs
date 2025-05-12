@@ -16,7 +16,7 @@ public class Playerdata
     public int Order { get { return order; } set { order = value; } }
     public int Score { get { return score; } set { score = value; } }
     public bool IsPass;
-    Playerdata()
+    public Playerdata()
     {
         name = "";
         order = 0;

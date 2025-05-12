@@ -40,10 +40,11 @@ public class UIGameplay : MonoBehaviour
     public void SlideTo(int player, int rank)
     {
         GameObject _objpanelPlayer = panelPlayer[player];
-        PanelPlayer _panelPlayer = _objpanelPlayer.GetComponent<PanelPlayer>();
+        PanelPlayer _panelPlayer = _objpanelPlayer.GetComponent<PanelPlayer>();  
+          _panelPlayer.SetScore(GameManager.Instance.Playerdatas[player].Score);
         _panelPlayer.ComeBack();
-        _objpanelPlayer.transform.parent = Podium.transform;
-        _panelPlayer.SetScore(GameManager.Instance.Playerdatas[player].Score);
+        _objpanelPlayer.transform.SetParent(Podium.transform);
+    
         _panelPlayer.panel.sizeDelta = new Vector2(400, 200);
     }
     public void TogglePanelPlayer()

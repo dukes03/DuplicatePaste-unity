@@ -18,7 +18,6 @@ public class GameOverState : IGameState
                     }
                 }
             }
-            Debug.Log(gameManager.Playerdatas[numPlayer].Name + gameManager.Playerdatas[numPlayer].Score);
         }
         List<Playerdata> _playerdatas = new List<Playerdata>();
 
@@ -27,6 +26,7 @@ public class GameOverState : IGameState
         gameManager.UIGameplay.ShowGameOver();
         for (int i = 0; i < _playerdatas.Count; i++)
         {
+            Debug.Log(_playerdatas[i].Score);
             gameManager.UIGameplay.SlideTo(_playerdatas[i].Order, i);
         }
     }

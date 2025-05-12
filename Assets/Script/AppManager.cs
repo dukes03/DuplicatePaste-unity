@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //To be used throughout the game
-public class AppManager : MonoBehaviour
+public class AppManager : Singleton<AppManager>
 {
 
     [SerializeField] List<Playerdata> playerdatas;

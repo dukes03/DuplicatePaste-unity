@@ -20,11 +20,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+          Playerdatas = AppManager.Instance.Playerdatas;
     }
     void Start()
     {
         SetState(new SetUpMapState());
         UIGameplay.SetupPanelPlayer();
+      
     }
 
 
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
         UIGameplay.TogglePanelPlayer();
         currentState = newState;
         currentState.EnterState(this);
-        
+
     }
     public bool CanNextTurn()
     {
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnDoneState()
     {
-         UIGameplay.TogglePanelPlayer();
+        UIGameplay.TogglePanelPlayer();
         currentState?.OnDone();
     }
     #region OnPointer  

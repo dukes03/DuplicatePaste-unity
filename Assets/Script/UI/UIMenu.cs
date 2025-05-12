@@ -1,16 +1,21 @@
-using Unity.VisualScripting;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject[] tutorialPages;
+    [SerializeField] private List<GameObject> panelPlayer;
     [SerializeField] private GameObject tutorial;
     [SerializeField] private Toggle toggleSFX;
     [SerializeField] private Toggle toggleMusic;
-    private int currentPage = 0;
+    [SerializeField] private Button bntAddplayer;
+    [SerializeField] private Button bntReMove;
+    private int currentPlayer = 1;
     private static UIMenu instance;
     public static UIMenu Instance { get { return instance; } }
+
 
     #region Lifecycle
     //Set Instance
@@ -20,67 +25,70 @@ public class UIMenu : MonoBehaviour
         {
             instance = this;
         }
-        tutorial.SetActive(false);
-       
     }
     void Start()
     {
-         UpdateSoundToggle();
+        UpdateSoundToggle();
+        for (int i = 0; i < panelPlayer.Count; i++)
+        {
+            PanelPlayer _panelPlayer = panelPlayer[i].GetComponent<PanelPlayer>();
+            _panelPlayer.Playername.transform.gameObject.SetActive(false);
+            _panelPlayer.textInput.transform.gameObject.SetActive(true);
+        }
     }
 
     #endregion
-    #region Tutorial
-    /* When you first open it, always start on page 1. 
-    But if it is already open, turn it off. */
-    public void OpenTutorial()
+    #region UI
+    public void AddPlayer()
     {
-        if (!tutorial.activeSelf)
+        currentPlayer += 1;
+        bntReMove.interactable = true;
+        panelPlayer[currentPlayer].SetActive(true);
+        if (currentPlayer >= 3)
         {
-            tutorial.SetActive(true);
-            currentPage = 0;
-            ShowPage(currentPage);
+            bntAddplayer.interactable = false;
+            currentPlayer = 3;
         }
-        else { EndTutorial(); }
 
     }
-    private void ShowPage(int index)
+    public void RemovePlayer()
     {
-        for (int i = 0; i < tutorialPages.Length; i++)
+        panelPlayer[currentPlayer].SetActive(false);
+        currentPlayer -= 1;
+        bntAddplayer.interactable = true;
+        if (currentPlayer <= 1)
         {
-            tutorialPages[i].SetActive(i == index);
-        }
-    }
-    public void NextPage()
-    {
-        currentPage++;
-
-        if (currentPage >= tutorialPages.Length)
-        {
-            PlaySoundBnt();
-            EndTutorial();
+            bntReMove.interactable = false;
+            currentPlayer = 1;
         }
         else
         {
-            PlaySoundBnt();
-            ShowPage(currentPage);
-        }
-    }
 
-    public void PreviousPage()
+        }
+
+    }
+    public void SetPlayerdatas()
     {
-        if (currentPage > 0)
+        AppManager.Instance.Playerdatas = GetPlayerdatas();
+        NextScene();
+    }
+    public void NextScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public List<Playerdata> GetPlayerdatas()
+    {
+        List<Playerdata> playerdatas = new List<Playerdata>();
+        for (int i = 0; i <= currentPlayer; i++)
         {
-            currentPage--;
-            PlaySoundBnt();
-            ShowPage(currentPage);
+            Playerdata _Playerdata = new Playerdata();
+            PanelPlayer _panelPlayer = panelPlayer[i].GetComponent<PanelPlayer>();
+            _Playerdata.Name = _panelPlayer.textInput.text;
+            _Playerdata.Color = (ColorPlayer)i + 1;
+            _Playerdata.Order = i;
+            playerdatas.Add(_Playerdata);
         }
-    }
-
-    // When you open to the last page
-    public void EndTutorial()
-    {
-        tutorial.SetActive(false);
-        ShowPage(tutorialPages.Length);
+        return playerdatas;
     }
     #endregion
 
@@ -101,8 +109,14 @@ public class UIMenu : MonoBehaviour
 
     private void UpdateSoundToggle()
     {
-        toggleSFX.isOn = SoundManager.Instance.TurnOnSFX;
-        toggleMusic.isOn = SoundManager.Instance.TurnOnMusic;
+        if (toggleSFX != null)
+        {
+            toggleSFX.isOn = SoundManager.Instance.TurnOnSFX;
+        }
+        if (toggleMusic != null)
+        {
+            toggleMusic.isOn = SoundManager.Instance.TurnOnMusic;
+        }
     }
     #endregion
 
